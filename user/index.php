@@ -4,6 +4,7 @@
 <?php
 include '../dbconnect.php';
 include '../cek.php';
+
 if ($role !== 'User') {
     header("location:../login.php");
 };
@@ -13,7 +14,7 @@ $userid = $_SESSION['userid'];
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MD. Nurul Hidayah: User Dashboard</title>
+    <title>MTS. Nurul Karomah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -53,7 +54,7 @@ $userid = $_SESSION['userid'];
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
-                    <h3>MD. Nurul Hidayah</h3>
+                    <h3>MTS. Nurul Karomah</h3>
                 </div>
             </div>
             <div class="main-menu">
@@ -73,20 +74,21 @@ $userid = $_SESSION['userid'];
             </div>
         </div>
         <div class="main-content">
-            <div class="header-area">
+            <div class="header-area py-3 bg-primary text-white">
                 <div class="row align-items-center">
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block" style="height: 3px; width: 25px;"></span>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li>
-                                <h3>
-                                    <div class="date">
+                                <h3 class="fs-5">
+                                    <div class="date text-end">
+                                        <i class="ti-calendar"></i>
                                         <script type='text/javascript'>
                                             var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                             var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -109,21 +111,25 @@ $userid = $_SESSION['userid'];
             <div class="main-content-inner">
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
-                                <h2>Dashboard</h2>
-                                <div class="market-status-table mt-4">
-                                    <div class="table-responsive">
-                                        Selamat datang di sistem informasi Penerimaan Santri Baru (PSB) Online.
-                                        <br>Sistem ini disusun oleh Ridwan
-                                        <br><br>
-                                        Panduan Pendaftaran:
-                                        <br>1. Pada bagian menu, klik 'Pendaftaran'.
-                                        <br>2. Isi seluruh formulir yang ditampilkan kemudian periksa kembali, pastikan tidak ada data yang salah.
-                                        <br>3. Klik submit, kemudian klik Confirm. Setelah di-confirm, data tidak dapat diubah kembali.
-                                        <br>4. Jika sudah, bukti pendaftaran akan ditampilkan dan dapat diunduh menjadi PDF
-                                        <br>
-                                        <br>*Note: Pihak sekolah baru akan menerima data Anda setelah Anda klik 'Confirm'
+                                <h2 class="text-center text-primary fs-4 fw-bold"><i class="ti-home text-primary"></i> Dashboard</h2>
+
+                                <hr>
+                                <h2 class="text-center fs-5">
+                                    Selamat datang di <strong>Sistem Informasi Penerimaan Siswa Baru (PSB) Online</strong>.
+                                </h2>
+
+                                <div class="mt-4">
+                                    <h4 class="text-center text-primary fs-4"><i class="ti-book"></i> Panduan Pendaftaran</h4>
+                                    <ol class="list-group list-group-numbered fs-5">
+                                        <li class="list-group-item">1. Pada bagian menu, klik 'Pendaftaran'.</li>
+                                        <li class="list-group-item">2. Isi seluruh formulir yang ditampilkan kemudian periksa kembali, pastikan tidak ada data yang salah.</li>
+                                        <li class="list-group-item">3. Klik submit, kemudian klik Confirm. Setelah di-confirm, data tidak dapat diubah kembali.</li>
+                                        <li class="list-group-item">4. Jika sudah, bukti pendaftaran akan ditampilkan dan dapat diunduh menjadi PDF.</li>
+                                    </ol>
+                                    <div class="alert alert-info mt-3 fs-5" role="alert">
+                                        <strong>Note:</strong> Pihak sekolah baru akan menerima data Anda setelah Anda klik 'Confirm'.
                                     </div>
                                 </div>
                             </div>
@@ -137,27 +143,25 @@ $userid = $_SESSION['userid'];
                             $data = mysqli_fetch_assoc($result);
                             if ($data['status_diterima'] == 1) {
                         ?>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h2>Status Pendaftaran</h2>
-                                        <h1>ANDA LULUS !</h1>
+                                <div class="card shadow mt-4">
+                                    <div class="card-body text-center">
+                                        <h2 class="text-success fs-4"><i class="ti-check-box"></i> Status Pendaftaran</h2>
+                                        <h1 class="text-uppercase fs-3 fw-bold">Anda Lulus!</h1>
                                     </div>
                                 </div>
                         <?php
                             }
                         } else {
-                            echo "<p>Status pendaftaran belum tersedia.</p>";
+                            echo "<div class='alert alert-warning mt-4 fs-5'>Status pendaftaran belum tersedia.</div>";
                         }
                         ?>
                     </div>
                 </div>
             </div>
         </div>
-        <footer>
-            <div class="footer-area">
-                <p>PSB Online by Ridwan</p>
-            </div>
-        </footer>
+
+
+        <?php include('../footer.html'); ?>
     </div>
     <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="../assets/js/popper.min.js"></script>

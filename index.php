@@ -132,30 +132,9 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 text-center">
-                    <h4 class="text-uppercase mb-3">Kontak</h4>
-                    <p><i class="fas fa-phone-alt"></i> +62 878 6162 4551</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <h4 class="text-uppercase mb-3">Media Sosial</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <h4 class="text-uppercase mb-3">Alamat Madrasah</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Desa Rapa Laok, Kec. Omben, Kab. Sampang</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
-    <div class="bg-dark text-white text-center py-2">
-        <small>© 2023 PSB Online by Ridwan</small>
-    </div>
+
+    <?php include('footer.html'); ?>
 
     <!-- Scroll to Top Button -->
     <a class="scroll-to-top" href="#page-top"><i class="fas fa-chevron-up"></i></a>

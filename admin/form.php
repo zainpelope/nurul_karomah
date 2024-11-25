@@ -44,27 +44,20 @@ if ($role !== 'Admin') {
         gtag('config', 'UA-144808195-1');
     </script>
 
-    <!-- others css -->
+
     <link rel="stylesheet" href="../assets/css/typography.css">
     <link rel="stylesheet" href="../assets/css/default-css.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
-    <!-- modernizr css -->
+
     <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start-->
     <div id="preloader">
         <div class="loader"></div>
     </div>
-    <!-- preloader area end -->
-    <!-- page container area start -->
     <div class="page-container">
-        <!-- sidebar menu area start -->
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
@@ -75,9 +68,9 @@ if ($role !== 'Admin') {
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li><a href="index.php"><span>Dashboard</span></a></li>
+
                             <li class="active">
-                                <a href="form.php"><i class="ti-layout"></i><span>Formulir</span></a>
+                                <a href="form.php"><i class="ti-layout"></i><span>Dashboard</span></a>
                             </li>
                             <li>
                                 <a href="user.php"><i class="ti-layout"></i><span>User Terdaftar</span></a>
@@ -102,13 +95,9 @@ if ($role !== 'Admin') {
                 </div>
             </div>
         </div>
-        <!-- sidebar menu area end -->
-        <!-- main content area start -->
         <div class="main-content">
-            <!-- header area start -->
             <div class="header-area">
                 <div class="row align-items-center">
-                    <!-- nav and search button -->
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
                             <span></span>
@@ -116,7 +105,6 @@ if ($role !== 'Admin') {
                             <span></span>
                         </div>
                     </div>
-                    <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li>
@@ -143,11 +131,7 @@ if ($role !== 'Admin') {
                     </div>
                 </div>
             </div>
-            <!-- header area end -->
-
             <div class="main-content-inner">
-
-                <!-- market value area start -->
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
                         <div class="card">
@@ -205,23 +189,14 @@ if ($role !== 'Admin') {
                     </div>
                 </div>
             </div>
-
-
-            <!-- row area start-->
         </div>
     </div>
-    <!-- main content area end -->
-    <!-- footer area start-->
     <footer>
         <div class="footer-area">
             <p>By Ridwan</p>
         </div>
     </footer>
-    <!-- footer area end-->
     </div>
-    <!-- page container area end -->
-
-
 
     <script>
         $(document).ready(function() {

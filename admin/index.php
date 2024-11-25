@@ -11,8 +11,9 @@ if ($role !== 'Admin') {
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MD. Nurul Hidayah: Admin Dashboard</title>
+    <title>Formulir</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -21,6 +22,15 @@ if ($role !== 'Admin') {
     <link rel="stylesheet" href="../assets/css/metisMenu.css">
     <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="../assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- Start datatable css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144808195-1"></script>
     <script>
@@ -33,8 +43,7 @@ if ($role !== 'Admin') {
 
         gtag('config', 'UA-144808195-1');
     </script>
-    <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+
     <!-- others css -->
     <link rel="stylesheet" href="../assets/css/typography.css">
     <link rel="stylesheet" href="../assets/css/default-css.css">
@@ -48,7 +57,7 @@ if ($role !== 'Admin') {
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <!-- preloader area start -->
+    <!-- preloader area start-->
     <div id="preloader">
         <div class="loader"></div>
     </div>
@@ -66,23 +75,22 @@ if ($role !== 'Admin') {
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li class="active"><a href="./index.php"><span>Dashboard</span></a></li>
-                            <li>
-                                <a href="./form.php"><i class="ti-layout"></i><span>Formulir</span></a>
+
+                            <li class="active">
+                                <a href="form.php"><i class="ti-layout"></i><span>Dashboard</span></a>
                             </li>
                             <li>
-                                <a href="./user.php"><i class="ti-layout"></i><span>User Terdaftar</span></a>
+                                <a href="user.php"><i class="ti-layout"></i><span>User Terdaftar</span></a>
+                            </li>
+
+                            <li>
+                                <a href="admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
                             </li>
                             <li>
-                                <a href="./admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
+                                <a href="pendaftaran.php"><i class="ti-layout"></i><span>Manajemen Pendaftaran</span></a>
                             </li>
                             <li>
                                 <a href="laporan.php"><i class="ti-layout"></i><span>Data Pendaftar</span></a>
-                            </li>
-                            <li>
-                                <a href="pendaftaran.php">
-                                    <i class="ti-layout"></i><span>Manajemen Pendaftaran</span>
-                                </a>
                             </li>
                             <li>
                                 <a href="../logout.php"><span>Logout</span></a>
@@ -115,7 +123,6 @@ if ($role !== 'Admin') {
                                 <h3>
                                     <div class="date">
                                         <script type='text/javascript'>
-                                            <!--
                                             var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                             var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
                                             var date = new Date();
@@ -126,8 +133,7 @@ if ($role !== 'Admin') {
                                             var yy = date.getYear();
                                             var year = (yy < 1000) ? yy + 1900 : yy;
                                             document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
-                                            //
-                                            -->
+                                            //-->
                                         </script></b>
                                     </div>
                                 </h3>
@@ -139,41 +145,106 @@ if ($role !== 'Admin') {
             </div>
             <!-- header area end -->
 
-            <!-- page title area end -->
             <div class="main-content-inner">
+
                 <!-- market value area start -->
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-center">
-                                    <h2>Dashboard</h2>
+                                    <h2>Kelola Formulir</h2>
                                 </div>
-                                <div class="market-status-table mt-4">
-                                    <div class="table-responsive">
-                                        Selamat datang di sistem informasi Penerimaan Santri Baru (PSB) Online Madrasah Diniyyah Nurul Hidayah.
-                                        <br>Sistem ini disusun oleh Ridwan
-                                    </div>
-                                </div>
+                                <table id="dataTable3" class="table table-hover" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>NISN</th>
+                                            <th>Tanggal Submit</th>
+                                            <th>Opsi</th>
+                                            <th>Terima</th>
+                                            <th>Tolak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $form = mysqli_query($conn, "SELECT * FROM userdata where status='Verified' ORDER BY userdataid DESC");
+                                        $no = 1;
+                                        while ($b = mysqli_fetch_array($form)) {
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $no++ ?></td>
+                                                <td><?php echo $b['namalengkap'] ?></td>
+                                                <td><?php echo $b['nisn'] ?></td>
+                                                <td><?php echo $b['tglkonfirmasi'] ?></td>
+                                                <td><a class="btn btn-primary btn-sm" href="view.php?u=<?php echo $b['userid']; ?>">Lihat Detail</a></td>
+                                                <td>
+                                                    <?php if ($b['status_diterima'] == 1) : ?>
+                                                        <button class="btn btn-info disabled">Terima</button>
+                                                    <?php else : ?>
+                                                        <a href="setuju.php?id=<?= $b['userdataid'] ?>&setuju=true" class="btn btn-success">Terima</a>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($b['status_diterima'] == 0) : ?>
+                                                        <button class="btn btn-danger disabled">Tolak</button>
+                                                    <?php else : ?>
+                                                        <a href="setuju.php?id=<?= $b['userdataid'] ?>&tolak=true" class="btn btn-danger">Tolak</a>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <a href="exportformulir.php" target="_blank" class="btn btn-info">Export Data</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- row area start-->
             </div>
+
+
+            <!-- row area start-->
         </div>
-        <!-- main content area end -->
-        <!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>PSB Online by Ridwan</p>
-            </div>
-        </footer>
-        <!-- footer area end-->
+    </div>
+    <!-- main content area end -->
+    <!-- footer area start-->
+    <footer>
+        <div class="footer-area">
+            <p>By Ridwan</p>
+        </div>
+    </footer>
+    <!-- footer area end-->
     </div>
     <!-- page container area end -->
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('input').on('keydown', function(event) {
+                if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
+                    var $t = $(this);
+                    event.preventDefault();
+                    var char = String.fromCharCode(event.keyCode);
+                    $t.val(char + $t.val().slice(this.selectionEnd));
+                    this.setSelectionRange(1, 1);
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#dataTable3').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+        });
+    </script>
 
     <!-- jquery latest version -->
     <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
@@ -184,7 +255,15 @@ if ($role !== 'Admin') {
     <script src="../assets/js/metisMenu.min.js"></script>
     <script src="../assets/js/jquery.slimscroll.min.js"></script>
     <script src="../assets/js/jquery.slicknav.min.js"></script>
-
+    <!-- Start datatable js -->
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <!-- start chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <!-- start highcharts js -->
@@ -202,6 +281,20 @@ if ($role !== 'Admin') {
     <!-- others plugins -->
     <script src="../assets/js/plugins.js"></script>
     <script src="../assets/js/scripts.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('input').on('keydown', function(event) {
+                if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
+                    var $t = $(this);
+                    event.preventDefault();
+                    var char = String.fromCharCode(event.keyCode);
+                    $t.val(char + $t.val().slice(this.selectionEnd));
+                    this.setSelectionRange(1, 1);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
