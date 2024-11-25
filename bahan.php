@@ -1,366 +1,124 @@
-<!doctype html>
-<html class="no-js" lang="en">
-
 <?php
-include '../dbconnect.php';
+session_start();
+include 'dbconnect.php';
+$alert = '';
 
-$sql = "
-    SELECT 
-        u.userdataid AS Nomor,
-        u.namalengkap AS NamaSiswa,
-        u.tglkonfirmasi AS TanggalMendaftar,
-        t.tahun_pelajaran AS TahunPelajaran,
-        CASE 
-            WHEN u.status = 'Verified' THEN 'Diterima'
-            WHEN u.status = 'Unverified' THEN 'Belum Diterima'
-            ELSE 'Status Tidak Diketahui'
-        END AS Status
-    FROM userdata u
-    LEFT JOIN tahun t ON u.id_tahun = t.id_tahun
-    ORDER BY u.tglkonfirmasi DESC
-";
+if (isset($_SESSION['role'])) {
+    header("location:index.php");
+}
 
-$result = $conn->query($sql);
+if (isset($_POST['btn-daftar'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    //cek apakah email sudah pernah digunakan
+    $lihat1 = mysqli_query($conn, "select * from user where useremail='$email'");
+    $lihat2 = mysqli_num_rows($lihat1);
+
+    if ($lihat2 < 1) {
+        //email belum pernah digunakan
+        $insert = mysqli_query($conn, "insert into user (useremail,userpassword) values ('$email','$password')");
+
+        //eksekusi query
+        if ($insert) {
+            echo "<div class='alert alert-success'>Berhasil mendaftar, silakan login.</div>
+            <meta http-equiv='refresh' content='2; url= login.php'/>  ";
+        } else {
+            //daftar gagal
+            echo "<div class='alert alert-warning'>Gagal mendaftar, silakan coba lagi.</div>
+            <meta http-equiv='refresh' content='2'>";
+        }
+    } else {
+        //jika email sudah pernah digunakan
+        $alert = '<strong><font color="red">Email sudah pernah digunakan</font></strong>';
+        echo '<meta http-equiv="refresh" content="2">';
+    }
+};
+
+
+
+
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Kelola Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/themify-icons.css">
-    <link rel="stylesheet" href="../assets/css/metisMenu.css">
-    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../assets/css/slicknav.min.css">
-    <!-- amchart css -->
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <!-- Start datatable css -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144808195-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MTS Nurul Karomah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-144808195-1');
-    </script>
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
 
-    <!-- others css -->
-    <link rel="stylesheet" href="../assets/css/typography.css">
-    <link rel="stylesheet" href="../assets/css/default-css.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <!-- modernizr css -->
-    <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
+        .login-container img {
+            max-width: 100px;
+            margin-bottom: 15px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="login-container">
+        <img src="nurul.png" alt="School Logo" style="width: 150px; height: auto;">
 
-    <div id="preloader">
-        <div class="loader"></div>
+
+        <h3>Selamat Datang di MTS Nurul Karomah</h3>
+        <p class="text-muted">Silakan daftar untuk mengakses sistem</p>
+        <form method="post" style="position: relative;">
+            <div class="form-group mb-3 position-relative">
+                <input type="email" class="form-control" placeholder="Email" name="email" required autofocus>
+            </div>
+            <div class="form-group mb-3 position-relative">
+                <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                <span class="show-password" onclick="togglePassword()">
+                    <i class="bi bi-eye" id="toggle-icon"></i>
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary" name="btn-daftar">Daftar</button>
+        </form>
     </div>
-
-    <div class="page-container">
-
-        <div class="sidebar-menu">
-            <div class="sidebar-header">
-                <div style="color:white">
-                    <h3>MD. Nurul Hidayah</3>
-                </div>
-            </div>
-
-            <div class="main-menu">
-                <div class="menu-inner">
-                    <nav>
-                        <ul class="metismenu" id="menu">
-                            <li>
-                                <a href="form.php"><i class="ti-layout"></i><span>Formulir</span></a>
-                            </li>
-                            <li>
-                                <a href="user.php"><i class="ti-layout"></i><span>User Terdaftar</span></a>
-                            </li>
-                            <li>
-                                <a href="admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
-                            </li>
-                            <li>
-                                <a href="laporan.php"><i class="ti-layout"></i><span>Data Pendaftar</span></a>
-                            </li>
-                            <li class="active">
-                                <a href="pendaftaran.php">
-                                    <i class="ti-layout"></i><span>Manajemen Pendaftaran</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../logout.php"><span>Logout</span></a>
-
-                            </li>
-
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <!-- sidebar menu area end -->
-        <!-- main content area start -->
-        <div class="main-content">
-            <!-- header area start -->
-            <div class="header-area">
-                <div class="row align-items-center">
-                    <!-- nav and search button -->
-                    <div class="col-md-6 col-sm-8 clearfix">
-                        <div class="nav-btn pull-left">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <!-- profile info & task notification -->
-                    <div class="col-md-6 col-sm-4 clearfix">
-                        <ul class="notification-area pull-right">
-                            <li>
-                                <h3>
-                                    <div class="date">
-                                        <script type='text/javascript'>
-                                            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                                            var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                                            var date = new Date();
-                                            var day = date.getDate();
-                                            var month = date.getMonth();
-                                            var thisDay = date.getDay(),
-                                                thisDay = myDays[thisDay];
-                                            var yy = date.getYear();
-                                            var year = (yy < 1000) ? yy + 1900 : yy;
-                                            document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
-                                            //-->
-                                        </script></b>
-                                    </div>
-                                </h3>
-
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- header area end -->
-
-            <div class="main-content-inner">
-
-                <!-- market value area start -->
-                <div class="row mt-5 mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="tahunPelajaran" class="form-label">Tahun Pelajaran:</label>
-                                        <select id="tahunPelajaran" class="form-select">
-                                            <option value="">Pilih Tahun</option>
-                                            <?php
-                                            $tahunQuery = "SELECT DISTINCT tahun_pelajaran FROM tahun";
-                                            $tahunResult = $conn->query($tahunQuery);
-                                            while ($tahun = $tahunResult->fetch_assoc()) {
-                                                echo "<option value='" . htmlspecialchars($tahun['tahun_pelajaran']) . "'>" . htmlspecialchars($tahun['tahun_pelajaran']) . "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="statusFilter" class="form-label">Pilih Status:</label>
-                                        <select id="statusFilter" class="form-select">
-                                            <option value="">Pilih Status</option>
-                                            <option value="Diterima">Diterima</option>
-                                            <option value="Belum Diterima">Belum Diterima</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <table id="pendaftarTable" class="table table-bordered table-striped">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Tanggal Mendaftar</th>
-                                            <th>Tahun Pelajaran</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if ($result->num_rows > 0) {
-                                            $no = 1;
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<tr>";
-                                                echo "<td>" . $no++ . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['NamaSiswa'] ?? '') . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['TanggalMendaftar'] ?? '') . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['TahunPelajaran'] ?? '') . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['Status'] ?? '') . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- row area start-->
-        </div>
-    </div>
-    <!-- main content area end -->
-    <!-- footer area start-->
-    <footer>
-        <div class="footer-area">
-            <p>By Ridwan</p>
-        </div>
-    </footer>
-    <!-- footer area end-->
-    </div>
-    <!-- page container area end -->
-
-
-
-
-    <!-- modal input -->
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tambah Admin Baru</h4>
-                </div>
-                <form method="post">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input name="adminemail" type="email" class="form-control" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input name="adminpassword" type="password" class="form-control" placeholder="Password">
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                        <input type="submit" class="btn btn-primary" value="Submit" name="adminbaru">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-
     <script>
-        $(document).ready(function() {
-            $('input').on('keydown', function(event) {
-                if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
-                    var $t = $(this);
-                    event.preventDefault();
-                    var char = String.fromCharCode(event.keyCode);
-                    $t.val(char + $t.val().slice(this.selectionEnd));
-                    this.setSelectionRange(1, 1);
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $('#dataTable3').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'print'
-                ]
-            });
-        });
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            }
+        }
     </script>
-
-    <!-- jquery latest version -->
-    <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
-    <!-- bootstrap 4 js -->
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/owl.carousel.min.js"></script>
-    <script src="../assets/js/metisMenu.min.js"></script>
-    <script src="../assets/js/jquery.slimscroll.min.js"></script>
-    <script src="../assets/js/jquery.slicknav.min.js"></script>
-    <!-- Start datatable js -->
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <!-- start chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- start zingchart js -->
-    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script>
-        zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
-    </script>
-    <!-- all line chart activation -->
-    <script src="../assets/js/line-chart.js"></script>
-    <!-- all pie chart -->
-    <script src="../assets/js/pie-chart.js"></script>
-    <!-- others plugins -->
-    <script src="../assets/js/plugins.js"></script>
-    <script src="../assets/js/scripts.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Inisialisasi DataTable
-            var table = $('#pendaftarTable').DataTable();
-
-            // Filter berdasarkan Tahun Pelajaran
-            $('#tahunPelajaran').on('change', function() {
-                table.column(3).search(this.value).draw();
-            });
-
-            // Filter berdasarkan Status
-            $('#statusFilter').on('change', function() {
-                table.column(4).search(this.value).draw();
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('input').on('keydown', function(event) {
-                if (this.selectionStart == 0 && event.keyCode >= 65 && event.keyCode <= 90 && !(event.shiftKey) && !(event.ctrlKey) && !(event.metaKey) && !(event.altKey)) {
-                    var $t = $(this);
-                    event.preventDefault();
-                    var char = String.fromCharCode(event.keyCode);
-                    $t.val(char + $t.val().slice(this.selectionEnd));
-                    this.setSelectionRange(1, 1);
-                }
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 </body>
 
 </html>
