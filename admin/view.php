@@ -132,37 +132,34 @@ $ambil = mysqli_fetch_array($cekdulu);
             <div class="main-content-inner">
 
                 <!-- panduan -->
-                <div class="row mt-5 mb-5">
-                    <div class="col-12">
-                        <a href="form.php" class="btn btn-info" style="margin-bottom:2%;">Kembali</a>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-sm-flex justify-content-between align-items-center">
-                                    <h2><?php echo $ambil['namalengkap'] ?></h2>
-                                </div>
-                                <div class="market-status-table mt-4">
-                                    <div class="table-responsive">
-                                        <img src="../user/<?php echo $ambil['foto'] ?>" width="20%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
 
                 <!------------------ Pisahin ------------------->
 
 
                 <form method="post" enctype="multipart/form-data">
-                    <!-- formulir -->
                     <div class="row mt-5 mb-5">
                         <div class="col-12">
-                            <div class="card">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-primary text-white">
+                                    <h2 class="mb-0">Data Pribadi</h2>
+                                </div>
                                 <div class="card-body">
-                                    <div class="d-sm-flex justify-content-between align-items-center">
-                                        <h2>Data Pribadi</h2>
+
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="d-sm-flex justify-content-center align-items-center">
+                                            <h2><?php echo $ambil['namalengkap'] ?></h2>
+                                        </div>
+                                        <div class="market-status-table mt-4">
+                                            <div class="table-responsive text-center">
+                                                <img src="../user/<?php echo $ambil['foto'] ?>" width="20%">
+                                            </div>
+                                        </div>
                                     </div>
+
+
+
                                     <div class="market-status-table mt-4">
                                         <div class="table-responsive" style="overflow-x:hidden;">
 
@@ -284,14 +281,13 @@ $ambil = mysqli_fetch_array($cekdulu);
                         </div>
                     </div>
 
-
                     <div class="row mt-5 mb-5">
                         <div class="col-12">
-                            <div class="card">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-primary text-white">
+                                    <h2 class="mb-0">Data Orang Tua</h2>
+                                </div>
                                 <div class="card-body">
-                                    <div class="d-sm-flex justify-content-between align-items-center">
-                                        <h2>Data Orang Tua</h2>
-                                    </div>
                                     <div class="market-status-table mt-4">
                                         <div class="table-responsive" style="overflow-x:hidden;">
 
@@ -432,13 +428,14 @@ $ambil = mysqli_fetch_array($cekdulu);
                     </div>
 
 
+
                     <div class="row mt-5 mb-5">
                         <div class="col-12">
-                            <div class="card">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-primary text-white">
+                                    <h2 class="mb-0">Data Sekolah Asal & Berkas</h2>
+                                </div>
                                 <div class="card-body">
-                                    <div class="d-sm-flex justify-content-between align-items-center">
-                                        <h2>Data Sekolah Asal & Berkas</h2>
-                                    </div>
                                     <div class="market-status-table mt-4">
                                         <div class="table-responsive" style="overflow-x:hidden;">
 
@@ -487,6 +484,12 @@ $ambil = mysqli_fetch_array($cekdulu);
                         </div>
                     </div>
 
+                    <div class="row mt-5 mb-5">
+                        <div class="col-12">
+                            <a href="form.php" class="btn btn-info w-100" style="margin-bottom:2%;">Kembali</a>
+                        </div>
+                    </div>
+
                 </form>
 
             </div>
@@ -498,11 +501,7 @@ $ambil = mysqli_fetch_array($cekdulu);
     </div>
     <!-- main content area end -->
     <!-- footer area start-->
-    <footer>
-        <div class="footer-area">
-            <p>PSB Online by Ridwan</p>
-        </div>
-    </footer>
+    <?php include('../footer.html'); ?>
     <!-- footer area end-->
     </div>
     <!-- page container area end -->
