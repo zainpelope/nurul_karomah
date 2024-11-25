@@ -16,7 +16,7 @@ if ($role !== 'Admin') {
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Kelola User</title>
+    <title>MTS. Nurul Karomah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -71,7 +71,7 @@ if ($role !== 'Admin') {
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
-                    <h3>MD. Nurul Hidayah</3>
+                    <h3>MTS. Nurul Karomah</3>
                 </div>
             </div>
             <div class="main-menu">
@@ -90,11 +90,12 @@ if ($role !== 'Admin') {
                                 <a href="admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
                             </li>
                             <li>
-                                <a href="pendaftaran.php"><i class="ti-layout"></i><span>Manajemen Pendaftaran</span></a>
-                            </li>
-                            <li>
                                 <a href="laporan.php"><i class="ti-layout"></i><span>Data Pendaftar</span></a>
                             </li>
+                            <li>
+                                <a href="pendaftaran.php"><i class="ti-layout"></i><span>Manajemen Pendaftaran</span></a>
+                            </li>
+
                             <li>
                                 <a href="../logout.php"><span>Logout</span></a>
 
@@ -108,23 +109,21 @@ if ($role !== 'Admin') {
         <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
-            <!-- header area start -->
-            <div class="header-area">
+            <div class="header-area py-3 bg-primary text-white">
                 <div class="row align-items-center">
-                    <!-- nav and search button -->
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block" style="height: 3px; width: 25px;"></span>
                         </div>
                     </div>
-                    <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li>
-                                <h3>
-                                    <div class="date">
+                                <h3 class="fs-5">
+                                    <div class="date text-end">
+                                        <i class="ti-calendar"></i>
                                         <script type='text/javascript'>
                                             var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                             var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -136,86 +135,101 @@ if ($role !== 'Admin') {
                                             var yy = date.getYear();
                                             var year = (yy < 1000) ? yy + 1900 : yy;
                                             document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
-                                            //-->
-                                        </script></b>
+                                        </script>
                                     </div>
                                 </h3>
-
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- header area end -->
 
             <div class="main-content-inner">
-
-                <!-- market value area start -->
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
-                        <div class="card">
+                        <!-- Card Container -->
+                        <div class="card shadow border-0">
+                            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                                <h3 class="m-0">Kelola User</h3>
+                                <a href="exportuser.php" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="bi bi-download"></i> Export Data
+                                </a>
+                            </div>
                             <div class="card-body">
-                                <div class="d-sm-flex justify-content-between align-items-center">
-                                    <h2>Kelola User</h2>
+                                <!-- Search Bar -->
+                                <div class="mb-3">
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Cari email...">
                                 </div>
-                                <table id="dataTable3" class="table table-hover" style="width:100%">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Email</th>
-                                            <th>Tanggal Daftar</th>
-                                            <th>Opsi</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $form = mysqli_query($conn, "SELECT * FROM user ORDER BY userid ASC");
-                                        $no = 1;
-                                        while ($b = mysqli_fetch_array($form)) {
-                                            $userid = $b['userid'];
-
-                                        ?>
-
+                                <!-- Table Container -->
+                                <div class="table-responsive">
+                                    <table id="dataTable3" class="table table-borderless table-striped align-middle">
+                                        <thead class="bg-light text-dark">
                                             <tr>
-                                                <td><?php echo $no++ ?></td>
-                                                <td><?php echo $b['useremail'] ?></td>
-                                                <td><?php echo $b['tgldaftar'] ?></td>
-                                                <form method="post">
-                                                    <input type="hidden" value="<?php echo $userid ?>" name="iduser">
-                                                    <td><input type="submit" class="btn btn-danger btn-sm" name="hapus" value="Hapus"></td>
-                                                </form>
+                                                <th style="width: 5%;">#</th>
+                                                <th>Email</th>
+                                                <th>Tanggal Daftar</th>
+                                                <th class="text-center" style="width: 20%;">Aksi</th>
                                             </tr>
-
-                                        <?php
-                                        };
-
-                                        if (isset($_POST['hapus'])) {
-                                            $user = $_POST['iduser'];
-                                            $query = mysqli_query($conn, "delete from user where userid='$user'");
-                                            if ($query) {
-                                                //berhasil bikin
-                                                echo " <div class='alert alert-success'>
-                                                          Berhasil hapus data.
-                                                      </div>
-                                                      <meta http-equiv='refresh' content='1; url= user.php'/>  ";
-                                            } else {
-                                                echo "<div class='alert alert-warning'>
-                                                              Gagal hapus data. Silakan coba lagi nanti.
-                                                          </div>
-                                                          <meta http-equiv='refresh' content='3; url= user.php'/> ";
+                                        </thead>
+                                        <tbody id="userTable">
+                                            <?php
+                                            $form = mysqli_query($conn, "SELECT * FROM user ORDER BY userid ASC");
+                                            $no = 1;
+                                            while ($b = mysqli_fetch_array($form)) {
+                                                $userid = $b['userid'];
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $no++ ?></td>
+                                                    <td><?php echo $b['useremail'] ?></td>
+                                                    <td><?php echo $b['tgldaftar'] ?></td>
+                                                    <td class="text-center">
+                                                        <form method="post" style="display:inline;">
+                                                            <input type="hidden" value="<?php echo $userid ?>" name="iduser">
+                                                            <button type="submit" name="hapus" class="btn btn-danger btn-sm">
+                                                                <i class="bi bi-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php
                                             }
-                                        }
-
-                                        ?>
-                                    </tbody>
-                                </table>
-                                <a href="exportuser.php" target="_blank" class="btn btn-info">Export Data</a>
+                                            if (isset($_POST['hapus'])) {
+                                                $user = $_POST['iduser'];
+                                                $query = mysqli_query($conn, "DELETE FROM user WHERE userid='$user'");
+                                                if ($query) {
+                                                    echo "<script>alert('Data berhasil dihapus!'); window.location.href='user.php';</script>";
+                                                } else {
+                                                    echo "<script>alert('Gagal menghapus data!');</script>";
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                // Search Functionality
+                const searchInput = document.getElementById('searchInput');
+                const userTable = document.getElementById('userTable');
+
+                searchInput.addEventListener('keyup', function() {
+                    const filter = searchInput.value.toLowerCase();
+                    const rows = userTable.getElementsByTagName('tr');
+                    for (let i = 0; i < rows.length; i++) {
+                        const email = rows[i].getElementsByTagName('td')[1];
+                        if (email) {
+                            const textValue = email.textContent || email.innerText;
+                            rows[i].style.display = textValue.toLowerCase().indexOf(filter) > -1 ? '' : 'none';
+                        }
+                    }
+                });
+            </script>
+
 
 
             <!-- row area start-->
@@ -223,11 +237,7 @@ if ($role !== 'Admin') {
     </div>
     <!-- main content area end -->
     <!-- footer area start-->
-    <footer>
-        <div class="footer-area">
-            <p>By Richard's Lab</p>
-        </div>
-    </footer>
+    <?php include('../footer.html'); ?>
     <!-- footer area end-->
     </div>
     <!-- page container area end -->

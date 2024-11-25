@@ -3,36 +3,31 @@
 
 <?php
 include '../dbconnect.php';
-include '../cek.php';
-if ($role !== 'Admin') {
-    header("location:../login.php");
-};
 
-if (isset($_POST['adminbaru'])) {
-    $email = $_POST['adminemail'];
-    $password = $_POST['adminpassword'];
-    $insert = mysqli_query($conn, "insert into admin(adminemail,adminpassword) values('$email','$password')");
-    if ($insert) {
-        //berhasil bikin
-        echo " <div class='alert alert-success'>
-              Berhasil tambah admin baru.
-          </div>
-          <meta http-equiv='refresh' content='1; url= admin.php'/>  ";
-    } else {
-        echo "<div class='alert alert-warning'>
-                  Gagal tambah admin baru. Silakan coba lagi nanti.
-              </div>
-              <meta http-equiv='refresh' content='3; url= admin.php'/> ";
-    }
-};
+$sql = "
+    SELECT 
+        u.userdataid AS Nomor,
+        u.namalengkap AS NamaSiswa,
+        u.tglkonfirmasi AS TanggalMendaftar,
+        t.tahun_pelajaran AS TahunPelajaran,
+        CASE 
+            WHEN u.status = 'Verified' THEN 'Diterima'
+            WHEN u.status = 'Unverified' THEN 'Belum Diterima'
+            ELSE 'Status Tidak Diketahui'
+        END AS Status
+    FROM userdata u
+    LEFT JOIN tahun t ON u.id_tahun = t.id_tahun
+    ORDER BY u.tglkonfirmasi DESC
+";
 
+$result = $conn->query($sql);
 ?>
 
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MTS. Nurul Karomah</title>
+    <title>Kelola Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -73,21 +68,17 @@ if (isset($_POST['adminbaru'])) {
 </head>
 
 <body>
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start-->
+
     <div id="preloader">
         <div class="loader"></div>
     </div>
-    <!-- preloader area end -->
-    <!-- page container area start -->
+
     <div class="page-container">
-        <!-- sidebar menu area start -->
+
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
-                    <h3>MTS. Nurul Karomah</3>
+                    <h3>MD. Nurul Hidayah</3>
                 </div>
             </div>
 
@@ -95,20 +86,19 @@ if (isset($_POST['adminbaru'])) {
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-
                             <li>
-                                <a href="form.php"><i class="ti-layout"></i><span>Dashboard</span></a>
+                                <a href="form.php"><i class="ti-layout"></i><span>Formulir</span></a>
                             </li>
                             <li>
                                 <a href="user.php"><i class="ti-layout"></i><span>User Terdaftar</span></a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
                             </li>
                             <li>
                                 <a href="laporan.php"><i class="ti-layout"></i><span>Data Pendaftar</span></a>
                             </li>
-                            <li>
+                            <li class="active">
                                 <a href="pendaftaran.php">
                                     <i class="ti-layout"></i><span>Manajemen Pendaftaran</span>
                                 </a>
@@ -126,21 +116,23 @@ if (isset($_POST['adminbaru'])) {
         <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
-            <div class="header-area py-3 bg-primary text-white">
+            <!-- header area start -->
+            <div class="header-area">
                 <div class="row align-items-center">
+                    <!-- nav and search button -->
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
-                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
-                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
-                            <span class="bg-white d-block" style="height: 3px; width: 25px;"></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
                     </div>
+                    <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li>
-                                <h3 class="fs-5">
-                                    <div class="date text-end">
-                                        <i class="ti-calendar"></i>
+                                <h3>
+                                    <div class="date">
                                         <script type='text/javascript'>
                                             var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                             var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -152,115 +144,103 @@ if (isset($_POST['adminbaru'])) {
                                             var yy = date.getYear();
                                             var year = (yy < 1000) ? yy + 1900 : yy;
                                             document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
-                                        </script>
+                                            //-->
+                                        </script></b>
                                     </div>
                                 </h3>
+
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <!-- header area end -->
 
             <div class="main-content-inner">
+
+                <!-- market value area start -->
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
-                        <!-- Card -->
-                        <div class="card shadow border-0">
-                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                <h3 class="m-0">Kelola Admin</h3>
-                                <button data-bs-toggle="modal" data-bs-target="#addAdminModal" class="btn btn-light btn-sm">
-                                    <i class="bi bi-person-plus"></i> Tambah Admin Baru
-                                </button>
-                            </div>
+                        <div class="card">
                             <div class="card-body">
-                                <!-- Table -->
-                                <div class="table-responsive">
-                                    <table id="dataTable3" class="table table-bordered table-hover align-middle">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th style="width: 5%;">#</th>
-                                                <th>Email</th>
-                                                <th class="text-center" style="width: 20%;">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="tahunPelajaran" class="form-label">Tahun Pelajaran:</label>
+                                        <select id="tahunPelajaran" class="form-select">
+                                            <option value="">Pilih Tahun</option>
                                             <?php
-                                            $form = mysqli_query($conn, "SELECT * FROM admin ORDER BY adminid ASC");
+                                            $tahunQuery = "SELECT DISTINCT tahun_pelajaran FROM tahun";
+                                            $tahunResult = $conn->query($tahunQuery);
+                                            while ($tahun = $tahunResult->fetch_assoc()) {
+                                                echo "<option value='" . htmlspecialchars($tahun['tahun_pelajaran']) . "'>" . htmlspecialchars($tahun['tahun_pelajaran']) . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="statusFilter" class="form-label">Pilih Status:</label>
+                                        <select id="statusFilter" class="form-select">
+                                            <option value="">Pilih Status</option>
+                                            <option value="Diterima">Diterima</option>
+                                            <option value="Belum Diterima">Belum Diterima</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <table id="pendaftarTable" class="table table-bordered table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Siswa</th>
+                                            <th>Tanggal Mendaftar</th>
+                                            <th>Tahun Pelajaran</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if ($result->num_rows > 0) {
                                             $no = 1;
-                                            while ($b = mysqli_fetch_array($form)) {
-                                                $adminid = $b['adminid'];
-                                            ?>
-                                                <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $b['adminemail']; ?></td>
-                                                    <td class="text-center">
-                                                        <form method="post" style="display:inline;">
-                                                            <input type="hidden" value="<?php echo $adminid; ?>" name="idadmin">
-                                                            <button type="submit" name="hapus" class="btn btn-danger btn-sm">
-                                                                <i class="bi bi-trash"></i> Hapus
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            <?php
-                                            }
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . $no++ . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['NamaSiswa'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['TanggalMendaftar'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['TahunPelajaran'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['Status'] ?? '') . "</td>";
 
-                                            if (isset($_POST['hapus'])) {
-                                                $admin = $_POST['idadmin'];
-                                                $query = mysqli_query($conn, "DELETE FROM admin WHERE adminid='$admin'");
-                                                if ($query) {
-                                                    echo "<script>alert('Admin berhasil dihapus!'); window.location.href='admin.php';</script>";
-                                                } else {
-                                                    echo "<script>alert('Gagal menghapus admin. Silakan coba lagi.');</script>";
-                                                }
+                                                echo "</tr>";
                                             }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
 
-                <!-- Modal Tambah Admin -->
-                <div class="modal fade" id="addAdminModal" tabindex="-1" aria-labelledby="addAdminModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-primary text-white">
-                                <h5 class="modal-title" id="addAdminModalLabel">Tambah Admin Baru</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="tambah_admin.php" method="post">
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="adminEmail" class="form-label">Email Admin</label>
-                                        <input type="email" class="form-control" id="adminEmail" name="adminemail" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="adminPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="adminPassword" name="adminpassword" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-
+            <!-- row area start-->
         </div>
     </div>
-
-    <?php include('../footer.html'); ?>
-
+    <!-- main content area end -->
+    <!-- footer area start-->
+    <footer>
+        <div class="footer-area">
+            <p>By Ridwan</p>
+        </div>
+    </footer>
+    <!-- footer area end-->
     </div>
+    <!-- page container area end -->
 
+
+
+
+    <!-- modal input -->
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -349,7 +329,25 @@ if (isset($_POST['adminbaru'])) {
     <!-- others plugins -->
     <script src="../assets/js/plugins.js"></script>
     <script src="../assets/js/scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi DataTable
+            var table = $('#pendaftarTable').DataTable();
 
+            // Filter berdasarkan Tahun Pelajaran
+            $('#tahunPelajaran').on('change', function() {
+                table.column(3).search(this.value).draw();
+            });
+
+            // Filter berdasarkan Status
+            $('#statusFilter').on('change', function() {
+                table.column(4).search(this.value).draw();
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('input').on('keydown', function(event) {

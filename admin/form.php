@@ -13,7 +13,7 @@ if ($role !== 'Admin') {
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Formulir</title>
+    <title>MTS. Nurul Karomah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -61,7 +61,7 @@ if ($role !== 'Admin') {
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
-                    <h3>MD. Nurul Hidayah</3>
+                    <h3>MTS. Nurul Karomah</3>
                 </div>
             </div>
             <div class="main-menu">
@@ -80,11 +80,12 @@ if ($role !== 'Admin') {
                                 <a href="admin.php"><i class="ti-layout"></i><span>Kelola Admin</span></a>
                             </li>
                             <li>
-                                <a href="pendaftaran.php"><i class="ti-layout"></i><span>Manajemen Pendaftaran</span></a>
-                            </li>
-                            <li>
                                 <a href="laporan.php"><i class="ti-layout"></i><span>Data Pendaftar</span></a>
                             </li>
+                            <li>
+                                <a href="pendaftaran.php"><i class="ti-layout"></i><span>Manajemen Pendaftaran</span></a>
+                            </li>
+
                             <li>
                                 <a href="../logout.php"><span>Logout</span></a>
 
@@ -96,20 +97,21 @@ if ($role !== 'Admin') {
             </div>
         </div>
         <div class="main-content">
-            <div class="header-area">
+            <div class="header-area py-3 bg-primary text-white">
                 <div class="row align-items-center">
                     <div class="col-md-6 col-sm-8 clearfix">
                         <div class="nav-btn pull-left">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block mb-1" style="height: 3px; width: 25px;"></span>
+                            <span class="bg-white d-block" style="height: 3px; width: 25px;"></span>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li>
-                                <h3>
-                                    <div class="date">
+                                <h3 class="fs-5">
+                                    <div class="date text-end">
+                                        <i class="ti-calendar"></i>
                                         <script type='text/javascript'>
                                             var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                             var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -121,81 +123,100 @@ if ($role !== 'Admin') {
                                             var yy = date.getYear();
                                             var year = (yy < 1000) ? yy + 1900 : yy;
                                             document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
-                                            //-->
-                                        </script></b>
+                                        </script>
                                     </div>
                                 </h3>
-
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="main-content-inner">
-                <div class="row mt-5 mb-5">
+
+            <div class="main-content-inner my-5">
+                <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card shadow">
+                            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                                <h4>Formulir Pendaftaran</h4>
+                                <a href="exportformulir.php" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="bi bi-download"></i> Export Data
+                                </a>
+                            </div>
                             <div class="card-body">
-                                <div class="d-sm-flex justify-content-between align-items-center">
-                                    <h2>Kelola Formulir</h2>
-                                </div>
-                                <table id="dataTable3" class="table table-hover" style="width:100%">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>NISN</th>
-                                            <th>Tanggal Submit</th>
-                                            <th>Opsi</th>
-                                            <th>Terima</th>
-                                            <th>Tolak</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $form = mysqli_query($conn, "SELECT * FROM userdata where status='Verified' ORDER BY userdataid DESC");
-                                        $no = 1;
-                                        while ($b = mysqli_fetch_array($form)) {
-                                        ?>
+                                <!-- Table scrollable container -->
+                                <div class="table-responsive">
+                                    <table id="dataTable3" class="table table-striped table-hover text-center">
+                                        <thead class="table-dark">
                                             <tr>
-                                                <td><?php echo $no++ ?></td>
-                                                <td><?php echo $b['namalengkap'] ?></td>
-                                                <td><?php echo $b['nisn'] ?></td>
-                                                <td><?php echo $b['tglkonfirmasi'] ?></td>
-                                                <td><a class="btn btn-primary btn-sm" href="view.php?u=<?php echo $b['userid']; ?>">Lihat Detail</a></td>
-                                                <td>
-                                                    <?php if ($b['status_diterima'] == 1) : ?>
-                                                        <button class="btn btn-info disabled">Terima</button>
-                                                    <?php else : ?>
-                                                        <a href="setuju.php?id=<?= $b['userdataid'] ?>&setuju=true" class="btn btn-success">Terima</a>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?php if ($b['status_diterima'] == 0) : ?>
-                                                        <button class="btn btn-danger disabled">Tolak</button>
-                                                    <?php else : ?>
-                                                        <a href="setuju.php?id=<?= $b['userdataid'] ?>&tolak=true" class="btn btn-danger">Tolak</a>
-                                                    <?php endif; ?>
-                                                </td>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>NISN</th>
+                                                <th>Tanggal Submit</th>
+                                                <th>Opsi</th>
+                                                <th>Terima</th>
+                                                <th>Tolak</th>
                                             </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                                <a href="exportformulir.php" target="_blank" class="btn btn-info">Export Data</a>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $form = mysqli_query($conn, "SELECT * FROM userdata WHERE status='Verified' ORDER BY userdataid DESC");
+                                            $no = 1;
+                                            while ($b = mysqli_fetch_array($form)) {
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $no++ ?></td>
+                                                    <td><?php echo $b['namalengkap'] ?></td>
+                                                    <td><?php echo $b['nisn'] ?></td>
+                                                    <td><?php echo $b['tglkonfirmasi'] ?></td>
+                                                    <td>
+                                                        <a class="btn btn-primary btn-sm" href="view.php?u=<?php echo $b['userid']; ?>">
+                                                            <i class="bi bi-eye"></i> Lihat Detail
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($b['status_diterima'] == 1) : ?>
+                                                            <button class="btn btn-info btn-sm disabled">
+                                                                <i class="bi bi-check-circle"></i> Terima
+                                                            </button>
+                                                        <?php else : ?>
+                                                            <a href="setuju.php?id=<?= $b['userdataid'] ?>&setuju=true" class="btn btn-success btn-sm">
+                                                                <i class="bi bi-check-circle"></i> Terima
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($b['status_diterima'] == 0) : ?>
+                                                            <button class="btn btn-danger btn-sm disabled">
+                                                                <i class="bi bi-x-circle"></i> Tolak
+                                                            </button>
+                                                        <?php else : ?>
+                                                            <a href="setuju.php?id=<?= $b['userdataid'] ?>&tolak=true" class="btn btn-danger btn-sm">
+                                                                <i class="bi bi-x-circle"></i> Tolak
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- End of scrollable table -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Bootstrap 5 Icons -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
+        <!-- Bootstrap 5 Icons -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
     </div>
-    <footer>
-        <div class="footer-area">
-            <p>By Ridwan</p>
-        </div>
-    </footer>
+    <?php include('../footer.html'); ?>
     </div>
 
     <script>
