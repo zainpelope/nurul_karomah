@@ -43,7 +43,7 @@ if ($role !== 'Admin') {
 <body>
 	<div class="container">
 		<h2>Data User Terdaftar</h2>
-		<h4>MD. Nurul Hidayah</h4>
+		<h4>MTS. Nurul Karomah</h4>
 		<div class="data-tables datatable-dark">
 			<table class="display" id="dataTable3" style="width:100%">
 				<thead class="thead-dark">

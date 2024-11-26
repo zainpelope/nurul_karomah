@@ -117,7 +117,7 @@ $userid = $_SESSION['userid'];
 
                                 <hr>
                                 <h2 class="text-center fs-5">
-                                    Selamat datang di <strong>Sistem Informasi Penerimaan Siswa Baru (PSB) Online</strong>.
+                                    Selamat datang di <strong>Sistem Informasi Penerimaan Perserta Didik Baru (PPDB) Online</strong>.
                                 </h2>
 
                                 <div class="mt-4">

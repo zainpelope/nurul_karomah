@@ -42,7 +42,7 @@ if (isset($_POST['btn-daftar'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MTS Nurul Karomah</title>
+    <title>Register - MTS Nurul Karomah</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
@@ -100,7 +100,13 @@ if (isset($_POST['btn-daftar'])) {
             </div>
             <button type="submit" class="btn btn-info btn-block w-100 mb-2" name="btn-daftar">Daftar</button>
 
+            <!-- Tambahkan teks dengan link ke halaman login -->
+            <p class="mt-3 text-muted">
+                Sudah punya akun?
+                <a href="login.php" class="text-info">Silakan login</a>
+            </p>
         </form>
+
     </div>
 
     <script>

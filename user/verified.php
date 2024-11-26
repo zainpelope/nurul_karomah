@@ -24,7 +24,7 @@ if ($status == 'Verified') {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MD. Nurul Hidayah: Pendaftaran</title>
+    <title>MTS. Nurul Karomah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -72,7 +72,7 @@ if ($status == 'Verified') {
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div style="color:white">
-                    <h3>MD. Nurul Hidayah</3>
+                    <h3>MTS. Nurul Karomah</3>
                 </div>
             </div>
             <div class="main-menu">
@@ -537,11 +537,7 @@ if ($status == 'Verified') {
     </div>
     <!-- main content area end -->
     <!-- footer area start-->
-    <footer>
-        <div class="footer-area">
-            <p>PSB Online by Ridwan</p>
-        </div>
-    </footer>
+    <?php include('../footer.html'); ?>
     <!-- footer area end-->
     </div>
     <!-- page container area end -->
