@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 15, 2020 at 07:10 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.10
+-- Host: localhost:8889
+-- Generation Time: Nov 26, 2024 at 04:09 AM
+-- Server version: 8.0.35
+-- PHP Version: 8.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ppdb`
+-- Database: `karoma`
 --
 
 -- --------------------------------------------------------
@@ -29,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `adminid` int(11) NOT NULL,
+  `adminid` int NOT NULL,
   `adminemail` varchar(50) NOT NULL,
   `adminpassword` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`adminid`, `adminemail`, `adminpassword`) VALUES
-(1, 'admin@richard.id', 'admin');
+(3, 'admin@gmail.com', 'admin');
 
 -- --------------------------------------------------------
 
@@ -48,10 +47,10 @@ INSERT INTO `admin` (`adminid`, `adminemail`, `adminpassword`) VALUES
 --
 
 CREATE TABLE `districts` (
-  `id` char(7) COLLATE utf8_unicode_ci NOT NULL,
-  `regency_id` char(4) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` char(7) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `regency_id` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `districts`
@@ -7285,9 +7284,9 @@ INSERT INTO `districts` (`id`, `regency_id`, `name`) VALUES
 --
 
 CREATE TABLE `provinces` (
-  `id` char(2) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `provinces`
@@ -7336,10 +7335,10 @@ INSERT INTO `provinces` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `regencies` (
-  `id` char(4) COLLATE utf8_unicode_ci NOT NULL,
-  `province_id` char(2) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` char(4) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `province_id` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `regencies`
@@ -7864,23 +7863,36 @@ INSERT INTO `regencies` (`id`, `province_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tahun`
+--
+
+CREATE TABLE `tahun` (
+  `id_tahun` int NOT NULL,
+  `tahun_pelajaran` int NOT NULL,
+  `tanggal_tutup` date NOT NULL,
+  `batas` int NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tahun`
+--
+
+INSERT INTO `tahun` (`id_tahun`, `tahun_pelajaran`, `tanggal_tutup`, `batas`, `status`) VALUES
+(10, 2025, '2024-11-30', 5, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `userid` int(11) NOT NULL,
+  `userid` int NOT NULL,
   `useremail` varchar(50) NOT NULL,
   `userpassword` varchar(50) NOT NULL,
-  `tgldaftar` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`userid`, `useremail`, `userpassword`, `tgldaftar`) VALUES
-(1, 'guest@richard.id', 'guest', '2020-08-12 02:22:41'),
-(6, 'me@richard.id', 'guest', '2020-08-12 02:22:41');
+  `tgldaftar` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -7889,8 +7901,8 @@ INSERT INTO `user` (`userid`, `useremail`, `userpassword`, `tgldaftar`) VALUES
 --
 
 CREATE TABLE `userdata` (
-  `userdataid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
+  `userdataid` int NOT NULL,
+  `userid` int NOT NULL,
   `nisn` varchar(12) NOT NULL,
   `nik` varchar(16) NOT NULL,
   `namalengkap` varchar(50) NOT NULL,
@@ -7926,15 +7938,10 @@ CREATE TABLE `userdata` (
   `scanijazahdepan` varchar(99) NOT NULL,
   `scanijazahbelakang` varchar(99) NOT NULL,
   `status` varchar(30) NOT NULL DEFAULT 'Unverified',
-  `tglkonfirmasi` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `userdata`
---
-
-INSERT INTO `userdata` (`userdataid`, `userid`, `nisn`, `nik`, `namalengkap`, `jeniskelamin`, `tempatlahir`, `tanggallahir`, `alamat`, `provinsi`, `kabupaten`, `kecamatan`, `kelurahan`, `agama`, `telepon`, `ayahnik`, `ayahnama`, `ayahpendidikan`, `ayahpekerjaan`, `ayahpenghasilan`, `ayahtelepon`, `ibunik`, `ibunama`, `ibupendidikan`, `ibupekerjaan`, `ibupenghasilan`, `ibutelepon`, `walinik`, `walinama`, `walipekerjaan`, `walitelepon`, `sekolahnpsn`, `sekolahnama`, `foto`, `scanijazahdepan`, `scanijazahbelakang`, `status`, `tglkonfirmasi`) VALUES
-(2, 1, '0001919919', '3172050101010002', 'Testing Aja Sih', 'L', 'Jakarta', '2020-08-05', 'Di Jakarta Aja Sih', '31', '3101', '3101010', '3101010003', 'Buddha', '083898900035', '3172938383838838', 'Warbyasah', 'SD', 'Tidak Bekerja', '3.000.000-5.000.000', '083898000000000', '3172038398230020', 'Yaokedeh', 'SD', 'Tidak Bekerja', '>20.000.000', '08129830299933', '3172939200200202', 'Waliansyah', 'TNI/Polri', '2008822', '982719129', 'SMP Negeri Batang', 'images/foto/foto_0001919919.jpg', 'images/ijazahdepan/ijazahdpn_0001919919.png', 'images/ijazahbelakang/ijazahblkg_0001919919.png', 'Verified', '2020-08-14');
+  `tglkonfirmasi` date DEFAULT NULL,
+  `status_diterima` tinyint(1) DEFAULT '0',
+  `id_tahun` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -7943,10 +7950,10 @@ INSERT INTO `userdata` (`userdataid`, `userid`, `nisn`, `nik`, `namalengkap`, `j
 --
 
 CREATE TABLE `villages` (
-  `id` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `district_id` char(7) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` char(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `district_id` char(7) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `villages`
@@ -86149,6 +86156,12 @@ ALTER TABLE `regencies`
   ADD KEY `regencies_province_id_index` (`province_id`);
 
 --
+-- Indexes for table `tahun`
+--
+ALTER TABLE `tahun`
+  ADD PRIMARY KEY (`id_tahun`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -86175,19 +86188,25 @@ ALTER TABLE `villages`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `adminid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tahun`
+--
+ALTER TABLE `tahun`
+  MODIFY `id_tahun` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `userid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `userdata`
 --
 ALTER TABLE `userdata`
-  MODIFY `userdataid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userdataid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

@@ -18,7 +18,7 @@ $ambil = mysqli_fetch_array($cekdulu);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MD. Nurul Hidayah: Tampilkan Pendaftar</title>
+    <title>MTS. Nurul Karomah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -65,7 +65,9 @@ $ambil = mysqli_fetch_array($cekdulu);
         <!-- sidebar menu area start -->
         <div class="sidebar-menu">
             <div class="sidebar-header">
-                <a href="index.php"><img src="../logo.png" alt="logo" width="100%"></a>
+                <div style="color:white">
+                    <h3>MTS. Nurul Karomah</3>
+                </div>
             </div>
             <div class="main-menu">
                 <div class="menu-inner">
